@@ -15,7 +15,7 @@
 
 - name: create hmac key
   include_tasks: hmac.yml
-  when: hmac_key_state in [ 'present', 'recreate' ]
+  when: hmac_key_state in [ 'present', 'regenerated' ]
 
 - name: remove hmac key
   file:

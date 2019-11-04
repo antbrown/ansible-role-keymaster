@@ -11,6 +11,4 @@
 
 - name: generate hmac {{ hmac_key_algorithm|upper }} key
   raw: "head -c {{ hmac_key_algorithm_lengths[hmac_key_algorithm|upper] }} /dev/urandom | base64 -w 0 > {{ hmac_key_directory}}/{{ hmac_key_file }}"
-  when:
-    - not stat_hmac_key.stat.exists
-    - hmac_key_state in ['present', 'regenerated']
+  when: (hmac_key_state == 'regenerated') or (hmac_key_state == 'present' and not stat_hmac_key.stat.exists)
