@@ -1,7 +1,22 @@
 ---
-  
+
+# absent, present
+ssl_key_state: present
+
 ssl_key_directory: /opt/keys/claw
 ssl_key_public_file: public.key
 ssl_key_private_file: private.key
 ssl_key_private_output_path: /tmp/private.key
 ssl_key_public_output_path: /tmp/public.key
+
+# absent, present, regenerated
+hmac_key_state: absent
+
+hmac_key_algorithm: HS512
+hmac_key_directory: /opt/keys/claw
+hmac_key_file: hmac.key
+
+hmac_key_algorithm_lengths:
+  HS256: 64
+  HS384: 96
+  HS512: 128

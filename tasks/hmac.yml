@@ -1,0 +1,16 @@
+---
+
+- name: ensure hmac key directory exists
+  file:
+    state: directory
+    path: "{{ hmac_key_directory }}"
+
+- name: gather info on {{ hmac_key_directory}}/{{ hmac_key_file }}
+  stat: path="{{ hmac_key_directory}}/{{ hmac_key_file }}"
+  register: stat_hmac_key
+
+- name: generate hmac {{ hmac_key_algorithm|upper }} key
+  raw: "head -c {{ hmac_key_algorithm_lengths[hmac_key_algorithm|upper] }} /dev/urandom | base64 -w 0 > {{ hmac_key_directory}}/{{ hmac_key_file }}"
+  when:
+    - not stat_hmac_key.stat.exists
+    - hmac_key_state in ['present', 'regenerated']
